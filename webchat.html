@@ -319,15 +319,18 @@
 };
 
             window.WebChat.renderWebChat(
-                {
-                    directLine: directLine,
-                    store,
-                    userID: userID,
-                    styleOptions
-                },
-                document.getElementById('webchat')
-            );
-        }
+  {
+    directLine,
+    store,
+    styleOptions,
+    userID: userID,
+    user: {
+      id: userID,
+      name: 'You'
+    }
+  },
+  document.getElementById('webchat')
+);
 
         // Render the WebChat when the page loads
         (async () => {
