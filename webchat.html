@@ -16,52 +16,44 @@
     <style>
         html,
         body {
-            height: 100%;
-        }
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        body {
-            margin: 0;
-            font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+#chatwindow {
+    width: 80%;
+    max-width: 900px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-top: 20px;
+}
 
-        #header {
-            background-color: rgb(11, 85, 106);
-            color: rgb(255, 255, 255);
-            font-weight: 600;
-            height: 48px;
-            padding: 0px 13px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+#header {
+    background-color: white;
+    color: #e60000;
+    font-weight: bold;
+    font-size: 24px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #e60000;
+}
 
-        #subheader {
-            background-color: rgb(243, 242, 241);
-            padding: 7px 13px;
-            font-size: 12px;
-            font-weight: 400;
-        }
+#subheader {
+    background-color: #f5f5f5;
+    padding: 5px 20px;
+    font-size: 14px;
+    color: #666;
+}
 
-        a {
-            color: rgb(0, 90, 158);
-        }
+#webchat {
+    height: calc(100vh - 150px);
+}
 
-        a:hover {
-            color: rgb(0, 69, 120);
-        }
-
-        #webchat {
-            position: fixed;
-            height: calc(100% - 75px);
-            width: 100%;
-            top: 75px;
-            overflow: hidden;
-        }
-
-        #logout {
-            display: none;
-        }
     </style>
 
 </head>
@@ -304,11 +296,20 @@
 
             const styleOptions = {
                 // Add styleOptions to customize Web Chat canvas
-                hideUploadButton: true,
-                botAvatarImage: 'https://bot-framework.azureedge.net/bot-icons-v1/6ab9b101-b65c-4357-9e9f-915cbf313a14_2K5Bt02aW8egEb97fxAgh7vqChK4UV3Nh3Lw3YYArhEKR8mB.png',
-                botAvatarInitials: 'Bot',
-                userAvatarImage: 'https://content.powerapps.com/resource/makerx/static/media/user.0d06c38a.svg',
-                userAvatarInitials: 'User'
+                botAvatarImage: 'https://img.icons8.com/color/48/robot.png',
+  botAvatarInitials: '🤖',
+  userAvatarImage: 'https://img.icons8.com/fluency/48/user-male-circle.png',
+  userAvatarInitials: '👤',
+  bubbleBackground: '#f5f5f5',
+  bubbleBorderRadius: 12,
+  bubbleFromUserBackground: '#ffffff',
+  bubbleFromUserBorderRadius: 12,
+  hideUploadButton: false,
+  sendBoxBackground: '#e0e0e0',
+  sendBoxBorderTop: 'solid 2px #ccc',
+  sendBoxTextColor: '#000',
+  primaryFont: 'Segoe UI, sans-serif',
+  accent: '#e60000'
             };
 
             window.WebChat.renderWebChat(
