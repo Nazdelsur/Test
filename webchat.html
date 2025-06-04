@@ -318,7 +318,7 @@
   accent: '#e60000'
 };
 
-            window.WebChat.renderWebChat(
+window.WebChat.renderWebChat(
   {
     directLine,
     store,
@@ -326,11 +326,12 @@
     userID: userID,
     user: {
       id: userID,
-      name: 'You'
+      name: user?.name || 'User'
     }
   },
   document.getElementById('webchat')
 );
+
 
         // Render the WebChat when the page loads
         (async () => {
