@@ -239,28 +239,6 @@
     </script>
 
     <script>
-      async function getUserProfilePhoto() {
-  try {
-    const tokenResponse = await msalInstance.acquireTokenSilent({
-      scopes: ["User.Read"]
-    });
-
-    const graphResponse = await fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
-      headers: {
-        Authorization: `Bearer ${tokenResponse.accessToken}`
-      }
-    });
-
-    if (!graphResponse.ok) throw new Error("Photo not found");
-
-    const blob = await graphResponse.blob();
-    return URL.createObjectURL(blob); // returns a local image blob URL
-  } catch (error) {
-    console.warn("User photo not available:", error);
-    return null;
-  }
-}
-
         async function renderChatWidget() {
 
             var userID = user?.localAccountId != null ?
@@ -346,14 +324,12 @@
 );
  
 
-const userPhotoUrl = await getUserProfilePhoto();
-
 const styleOptions = {
   botAvatarImage: 'igris_bot_icon_128x128.png',
   botAvatarInitials: '',
   botAvatarBackgroundColor: 'transparent',
-  userAvatarImage: userPhotoUrl || 'Icon_mini.png', // ← use user's photo or fallback
-  userAvatarInitials: '',
+  userAvatarImage: 'Icon_mini.png',
+    userAvatarInitials: '',
   userAvatarBackgroundColor: 'transparent',
   bubbleBackground: 'transparent',
   bubbleBorderRadius: 12,
@@ -366,7 +342,6 @@ const styleOptions = {
   primaryFont: "'BaikalBlack', sans-serif",
   accent: '#e60000'
 };
-
             
 const activityMiddleware = () => next => card => {
   if (card.activity.from.role === 'user') {
