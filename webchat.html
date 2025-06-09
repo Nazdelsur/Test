@@ -322,50 +322,110 @@
     }
   }
 );
- 
-
-const styleOptions = {
-  botAvatarImage: 'igris_bot_icon_128x128.png',
-  botAvatarInitials: '',
-  botAvatarBackgroundColor: 'transparent',
-  userAvatarImage: 'Icon_mini.png',
-    userAvatarInitials: '',
-  userAvatarBackgroundColor: 'transparent',
-  bubbleBackground: 'transparent',
-  bubbleBorderRadius: 12,
-  bubbleFromUserBackground: 'transparent',
-  bubbleFromUserBorderRadius: 12,
-  hideUploadButton: false,
-  sendBoxBackground: '#e0e0e0',
-  sendBoxBorderTop: 'solid 2px #ccc',
-  sendBoxTextColor: '#000',
-  primaryFont: "'BaikalBlack', sans-serif",
-  accent: '#e60000'
-};
             
-const activityMiddleware = () => next => card => {
-  if (card.activity.from.role === 'user') {
-    card.activity.from = {
+ async function getUserProfilePhoto() {
+  try {
+    const tokenResponse = await msalInstance.acquireTokenSilent({
+      scopes: ["User.Read"]
+    });
+
+    const graphResponse = await fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
+      headers: {
+        Authorization: `Bearer ${tokenResponse.accessToken}`
+      }
+    });
+
+    if (!graphResponse.ok) throw new Error("Photo not found");
+
+    const blob = await graphResponse.blob();
+    return URL.createObjectURL(blob); // returns a local image blob URL
+  } catch (error) {
+    console.warn("User photo not available:", error);
+    return null;
+  }
+}
+
+
+async function renderChatWidget() {
+  var userID = user?.localAccountId != null
+    ? (user.localAccountId).substr(0, 36)
+    : 'offline-user';
+
+  const { token } = await fetchJSON(tokenEndpoint);
+  const directLine = window.WebChat.createDirectLine({
+    token,
+    domain: "https://europe.directline.botframework.com/v3/directline"
+  });
+
+  const store = WebChat.createStore(
+    {},
+    ({ dispatch }) => next => action => {
+      if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
+        dispatch({
+          meta: { method: "keyboard" },
+          payload: {
+            activity: {
+              channelData: { postBack: true },
+              name: 'startConversation',
+              type: "event"
+            }
+          },
+          type: "DIRECT_LINE/POST_ACTIVITY"
+        });
+      }
+      return next(action);
+    }
+  );
+
+  // 🔥 GET USER PROFILE PHOTO
+  const userPhoto = await getUserProfilePhoto();
+
+  const styleOptions = {
+    botAvatarImage: 'igris_bot_icon_128x128.png',
+    botAvatarInitials: '',
+    botAvatarBackgroundColor: 'transparent',
+
+    userAvatarImage: userPhoto || 'Icon_mini.png', // ⬅️ Use user's photo or fallback
+    userAvatarInitials: '',
+    userAvatarBackgroundColor: 'transparent',
+
+    bubbleBackground: 'transparent',
+    bubbleBorderRadius: 12,
+    bubbleFromUserBackground: 'transparent',
+    bubbleFromUserBorderRadius: 12,
+    hideUploadButton: false,
+    sendBoxBackground: '#e0e0e0',
+    sendBoxBorderTop: 'solid 2px #ccc',
+    sendBoxTextColor: '#000',
+    primaryFont: "'BaikalBlack', sans-serif",
+    accent: '#e60000'
+  };
+
+  const activityMiddleware = () => next => card => {
+    if (card.activity.from.role === 'user') {
+      card.activity.from = {
+        id: userID,
+        name: 'User',
+        role: 'user'
+      };
+    }
+    return next(card);
+  };
+
+  // 💬 RENDER CHAT
+  window.WebChat.renderWebChat({
+    directLine,
+    store,
+    styleOptions,
+    userID,
+    user: {
       id: userID,
       name: 'User',
       role: 'user'
-    };
-  }
-  return next(card);
-};
-            
-window.WebChat.renderWebChat({
-  directLine,
-  store,
-  styleOptions,
-  userID: userID,
-  user: {
-    id: userID,
-    name: 'User',
-    role: 'user'
-  },
-  activityMiddleware
-}, document.getElementById('webchat'));
+    },
+    activityMiddleware
+  }, document.getElementById('webchat'));
+}
 
         }
         // Render the WebChat when the page loads
