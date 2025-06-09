@@ -231,7 +231,7 @@
             });
 
             if (!res.ok) {
-                throw new Error(Failed to fetch JSON due to ${res.status});
+                throw new Error(`Failed to fetch JSON due to ${res.status}`);
             }
 
             return await res.json();
