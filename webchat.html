@@ -25,7 +25,7 @@
 }
 
         html,
-        body {
+       body {
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -46,6 +46,7 @@
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         #header {
@@ -93,13 +94,21 @@
             margin: 0 20px 20px 20px;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
+            padding-bottom: 10px;
         }
 
-        /* Asegura que el control del sendBox esté visible correctamente */
         #webchat > * {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Evita que el contenido se salga del contenedor */
+        .webchat__basic-transcript__scrollable-wrapper {
+            max-height: 100%;
+            overflow-y: auto;
         }
     </style>
 
