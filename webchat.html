@@ -95,7 +95,11 @@
         }
 
         #webchat {
-            flex: 1;
+           flex: 1;
+            overflow-y: auto;
+            /* Habilita scroll vertical */
+            max-height: 100%;
+            /* Asegura que no se desborde */
         }
     </style>
 
@@ -342,7 +346,7 @@
 
 
         const styleOptions = {
-            botAvatarImage: 'igris_bot_icon_128x128.png',
+            botAvatarImage: 'Hiberionlogo.png',
                 botAvatarBackgroundColor: 'transparent',
                 userAvatarBackgroundColor: 'transparent',
                 bubbleBackground: 'rgba(255,255,255,0.2)',
