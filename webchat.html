@@ -2,95 +2,189 @@
 <html lang="en">
 
 <head>
-    <title>HIBERUS Copilot Web Chat</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>HIBERUS Web Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
     <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.32.0/js/msal-browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(180deg, rgba(179, 179, 179, 0.62), rgba(111, 109, 109, 0.2)), url('./img/MS-YP-wallpaper-desktop-1.png') no-repeat center center / cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #chatwindow {
+            width: 90%;
+            max-width: 900px;
+            height: 90vh;
+            backdrop-filter: blur(12px) brightness(100%);
+            -webkit-backdrop-filter: blur(12px) brightness(100%);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            box-shadow: inset 0 0 22px rgba(242, 242, 242, 0.5), inset 2px 2px 1px -2px rgba(179, 179, 179, 1), inset -5px -12px 6px -14px rgba(179, 179, 179, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #header {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 24px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #subheader {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #login, #logout {
+            background: rgba(119, 134, 217, 0.6);
+            color: white;
+            font-weight: 500;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #login:hover, #logout:hover {
+            background: rgba(119, 134, 217, 0.9);
+        }
+
+        #webchat {
+            flex: 1;
+        }
+    </style>
 </head>
 
 <body>
     <div id="chatwindow">
         <div id="header">
-            <img src="igris_bot_icon_128x128.png" alt="IGRIS LOGO" style="height: 32px; margin-right: 10px;" />
-            <span style="font-size: 24px; font-weight: bold; color: #e60000">HIBERUS Web Chat</span>
+            <img src="igris_bot_icon_128x128.png" alt="HIBERUS LOGO" style="height: 32px; margin-right: 10px;">
+            HIBERUS Web Chat
         </div>
-
         <div id="subheader">
             <span id="loginStatus">You are not logged in on the website.</span>
-            <button id="login" onclick="onSignInClick()">Log in</button>
-            <button id="logout" onclick="onSignOutClick()" style="display:none">Log out</button>
+            <div>
+                <button id="login" onclick="onSignInClick()">Log in</button>
+                <button id="logout" onclick="onSignOutClick()" style="display:none">Log out</button>
+            </div>
         </div>
-
         <div id="webchat"></div>
     </div>
 
     <script>
-        // Inserta el CSS avanzado dinámicamente como const funcional
-        const styleSheet = `
-            .android-expanded { background-color: rgba(255, 255, 255, 1.0); display: flex; flex-direction: row; justify-content: center; width: 100%; }
-            .android-expanded .div { background: linear-gradient(180deg, rgba(179, 179, 179, 0.62) 0%, rgba(111, 109, 109, 0.2) 100%), url(./MS-YP-wallpaper-desktop-1.png) center/cover no-repeat; height: 800px; position: relative; width: 1280px; }
-            .android-expanded .image { height: 504px; left: 25px; object-fit: cover; position: absolute; top: 88px; width: 750px; }
-            .android-expanded .button { all: unset; align-items: flex-start; border-radius: 15px; box-sizing: border-box; display: inline-flex; flex-direction: column; gap: 8px; height: 34px; left: 802px; overflow: hidden; position: absolute; top: 25px; }
-            .android-expanded .distort { height: 34px; left: 0; object-fit: cover; position: absolute; top: 0; width: 158px; }
-            .android-expanded .liquid-glass-button { -webkit-backdrop-filter: blur(12px) brightness(100%); backdrop-filter: blur(12px) brightness(100%); background: linear-gradient(180deg, rgba(102, 102, 102, 0.2) 0%, rgba(102, 102, 102, 0) 33%), linear-gradient(180deg, rgba(102, 102, 102, 0) 50%, rgba(102, 102, 102, 0.2) 100%), linear-gradient(0deg, rgba(29, 29, 29, 0.2) 0%, rgba(29, 29, 29, 0.2) 100%), linear-gradient(0deg, rgba(29, 29, 29, 1) 0%, rgba(29, 29, 29, 1) 100%); border: none; border-left: 2px solid; border-top: 2px solid; border-radius: 32px; box-shadow: inset 0px 0px 22px #f2f2f280, inset 2px 2px 1px -2px #b3b3b3, inset -5px -12px 6px -14px #b3b3b3; display: flex; flex: 1; flex-grow: 1; gap: 8px; justify-content: center; margin: -1px; overflow: hidden; padding: 12px 24px; position: relative; width: 100%; }
-            .android-expanded .liquid-glass-button::before { -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; background: linear-gradient(148deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 50%); border-radius: 32px; content: ""; inset: 0; mask-composite: exclude; padding: 2px; pointer-events: none; position: absolute; z-index: 1; }
-            .android-expanded .text-wrapper { color: #ffffff; font-family: "SF Pro-Semibold", Helvetica; font-size: 15px; font-weight: 400; line-height: 15px; position: relative; text-align: center; white-space: nowrap; width: fit-content; }
-            /* Puedes continuar agregando aquí todo el resto de tu CSS recortado según necesidad */
-        `;
-
-        const styleTag = document.createElement('style');
-        styleTag.innerHTML = styleSheet;
-        document.head.appendChild(styleTag);
-
-        // Configuraciones de tu bot
         const clientId = "4b2315fa-fd7b-4bcf-9ea0-283a5b877e11";
         const tenantId = "959d9200-12be-4937-9ff4-a42df3cd2427";
         const tokenEndpoint = "https://2e3fb5a32998ed9fad7d8ee9e845db.49.environment.api.powerplatform.com/powervirtualagents/botsbyschema/iaghm_iagEmploymentHistoryReader/directline/token?api-version=2022-03-01-preview";
 
         const msalConfig = {
-            auth: { clientId: clientId, authority: "https://login.microsoftonline.com/" + tenantId },
-            cache: { cacheLocation: "sessionStorage", storeAuthStateInCookie: false }
+            auth: {
+                clientId: clientId,
+                authority: `https://login.microsoftonline.com/${tenantId}`
+            },
+            cache: {
+                cacheLocation: "sessionStorage",
+                storeAuthStateInCookie: false
+            }
         };
 
-        const loginRequest = { scopes: ["User.Read", "openid", "profile"] };
+        const loginRequest = {
+            scopes: ["User.Read", "openid", "profile"]
+        };
+
         const msalInstance = new msal.PublicClientApplication(msalConfig);
 
-        const styleOptions = {
-            botAvatarImage: 'igris_bot_icon_128x128.png',
-            botAvatarBackgroundColor: 'transparent',
-            userAvatarImage: 'Icon_mini.png',
-            userAvatarBackgroundColor: 'transparent',
-            bubbleBackground: 'transparent',
-            bubbleFromUserBackground: 'transparent',
-            bubbleBorderRadius: 12,
-            bubbleFromUserBorderRadius: 12,
-            hideUploadButton: false,
-            sendBoxBackground: '#e0e0e0',
-            sendBoxBorderTop: 'solid 2px #ccc',
-            sendBoxTextColor: '#000',
-            primaryFont: "'BaikalBlack', sans-serif",
-            accent: '#e60000'
-        };
+        async function onSignInClick() {
+            try {
+                await msalInstance.loginPopup(loginRequest);
+            } catch (err) {
+                console.error(err);
+            }
+            handleUserState();
+        }
+
+        async function onSignOutClick() {
+            const accounts = msalInstance.getAllAccounts();
+            if (accounts.length > 0) {
+                await msalInstance.logoutPopup({ account: accounts[0] });
+                location.reload();
+            }
+        }
+
+        function handleUserState() {
+            const accounts = msalInstance.getAllAccounts();
+            if (accounts.length > 0) {
+                const user = accounts[0];
+                document.getElementById("loginStatus").textContent = `Currently logged in as ${user.name} on the website.`;
+                document.getElementById("login").style.display = "none";
+                document.getElementById("logout").style.display = "inline-block";
+            }
+        }
+
+        handleUserState();
 
         async function fetchJSON(url, options = {}) {
-            const res = await fetch(url, { ...options, headers: { ...options.headers, accept: 'application/json' } });
-            if (!res.ok) throw new Error(`Failed to fetch JSON due to ${res.status}`);
+            const res = await fetch(url, {
+                ...options,
+                headers: { ...options.headers, accept: 'application/json' }
+            });
+            if (!res.ok) throw new Error(`Fetch failed with status ${res.status}`);
             return await res.json();
         }
 
         async function renderChatWidget() {
+            const accounts = msalInstance.getAllAccounts();
+            const user = accounts[0];
+            const userID = user?.localAccountId ?? Math.random().toString(36).substr(2, 15);
+
             const { token } = await fetchJSON(tokenEndpoint);
             const directLine = window.WebChat.createDirectLine({ token });
+
+            const styleOptions = {
+                botAvatarImage: 'igris_bot_icon_128x128.png',
+                botAvatarBackgroundColor: 'transparent',
+                userAvatarBackgroundColor: 'transparent',
+                bubbleBackground: 'rgba(255,255,255,0.2)',
+                bubbleBorderRadius: 16,
+                bubbleFromUserBackground: 'rgba(102,102,102,0.2)',
+                bubbleFromUserBorderRadius: 16,
+                sendBoxBackground: 'rgba(255,255,255,0.2)',
+                sendBoxTextColor: '#000',
+                primaryFont: "'Montserrat', sans-serif",
+                accent: '#7786D9'
+            };
+
             window.WebChat.renderWebChat({
                 directLine,
-                styleOptions,
-                userID: "user_" + Date.now()
+                userID,
+                styleOptions
             }, document.getElementById('webchat'));
         }
 
-        (async () => { await renderChatWidget(); })();
+        (async () => {
+            await renderChatWidget();
+        })();
     </script>
 </body>
 
