@@ -8,21 +8,30 @@
     <!-- BOTFRAMEWORK WEBCHAT -->
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 
-    <!-- MSAL (Microsoft Authentication Library) para login -->
+    <!-- MSAL (Microsoft Authentication Library) -->
     <script src="https://alcdn.msauth.net/browser/2.32.0/js/msal-browser.min.js"></script>
 
     <!-- FUENTE MONTSERRAT PARA TODO EL SITIO -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
 
+    <!-- FUENTE UNIVERSO PARA HIBERION -->
+    <style>
+        @font-face {
+            font-family: 'Universo';
+            src: url('./fonts/universo-2.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+
     <!-- ====================================================== -->
-    <!-- ESTILOS: Puedes editar aquí el diseño visual del bot -->
+    <!-- ESTILOS DEL CHAT WEB EMBEBIDO                          -->
     <!-- ====================================================== -->
     <style>
-        /* Fondo general con degradado y glassmorfismo */
         body, html {
             height: 100%;
             margin: 0;
-            font-family: 'Universo', sans-serif; /* Cambiar tipografía general aquí */
+            font-family: 'Montserrat', sans-serif; /* Fuente general */
             background: linear-gradient(180deg, rgba(179, 179, 179, 0.62), rgba(111, 109, 109, 0.2)),
                         url('./img/MS-YP-wallpaper-desktop-1.png') no-repeat center center / cover;
             display: flex;
@@ -30,7 +39,6 @@
             align-items: center;
         }
 
-        /* Contenedor principal del chat */
         #chatwindow {
             width: 90%;
             max-width: 900px;
@@ -47,7 +55,6 @@
             flex-direction: column;
         }
 
-        /* Encabezado del chat (logo + nombre del bot) */
         #header {
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
@@ -59,7 +66,19 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Subencabezado con estado de login y botones */
+        /* Aplica Universo solo a "HIBERION" */
+        .titulo-hiberion {
+            font-family: 'Universo', sans-serif;
+            font-size: 24px;
+            margin-right: 5px;
+        }
+
+        /* Mantiene Montserrat en "Chat" */
+        .titulo-chat {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+        }
+
         #subheader {
             background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
@@ -70,7 +89,6 @@
             justify-content: space-between;
         }
 
-        /* Botones de login/logout */
         #login, #logout {
             background: rgba(119, 134, 217, 0.6);
             color: white;
@@ -86,7 +104,6 @@
             background: rgba(119, 134, 217, 0.9);
         }
 
-        /* Contenedor de WebChat */
         #webchat {
             flex: 1;
         }
@@ -94,18 +111,19 @@
 </head>
 
 <body>
-    <!-- ======================================== -->
-    <!-- ESTRUCTURA VISUAL DEL CHAT EMBEBIDO -->
-    <!-- ======================================== -->
+    <!-- ====================================================== -->
+    <!-- ESTRUCTURA DEL CHAT                                   -->
+    <!-- ====================================================== -->
     <div id="chatwindow">
 
-        <!-- Encabezado: Logo + Nombre del Bot -->
+        <!-- ENCABEZADO DEL CHAT -->
         <div id="header">
             <img src="ChatGPT Image 10 jun 2025, 15_16_46.png" alt="HIBERUS LOGO" style="height: 45px; margin-right: 10px;">
-            HIBERION Chat
+            <span class="titulo-hiberion">HIBERION</span>
+            <span class="titulo-chat">Chat</span>
         </div>
 
-        <!-- Subencabezado: Estado de Login -->
+        <!-- SUBENCABEZADO: LOGIN STATUS -->
         <div id="subheader">
             <span id="loginStatus">You are not logged in on the website.</span>
             <div>
@@ -114,15 +132,14 @@
             </div>
         </div>
 
-        <!-- Contenedor donde se renderiza el bot -->
+        <!-- CONTENEDOR DEL WEBCHAT -->
         <div id="webchat"></div>
     </div>
 
-    <!-- =========================================================== -->
-    <!-- SCRIPT PRINCIPAL: CONEXIÓN PVA + MSAL + WEBCHAT + ESTILOS -->
-    <!-- =========================================================== -->
+    <!-- ====================================================== -->
+    <!-- SCRIPT DE CONEXIÓN Y RENDER DEL BOT                   -->
+    <!-- ====================================================== -->
     <script>
-        /* Configuración de conexión y autenticación */
         const clientId = "4b2315fa-fd7b-4bcf-9ea0-283a5b877e11";
         const tenantId = "959d9200-12be-4937-9ff4-a42df3cd2427";
         const tokenEndpoint = "https://2e3fb5a32998ed9fad7d8ee9e845db.49.environment.api.powerplatform.com/powervirtualagents/botsbyschema/iaghm_iagEmploymentHistoryReader/directline/token?api-version=2022-03-01-preview";
@@ -144,7 +161,6 @@
 
         const msalInstance = new msal.PublicClientApplication(msalConfig);
 
-        /* Funciones de inicio/cierre de sesión */
         async function onSignInClick() {
             try {
                 await msalInstance.loginPopup(loginRequest);
@@ -174,7 +190,6 @@
 
         handleUserState();
 
-        /* Funciones de conexión al bot */
         async function fetchJSON(url, options = {}) {
             const res = await fetch(url, {
                 ...options,
@@ -192,7 +207,6 @@
             const { token } = await fetchJSON(tokenEndpoint);
             const directLine = window.WebChat.createDirectLine({ token });
 
-            /* Personalización de estilo visual del bot */
             const styleOptions = {
                 botAvatarImage: 'igris_bot_icon_128x128.png',
                 botAvatarBackgroundColor: 'transparent',
@@ -203,8 +217,8 @@
                 bubbleFromUserBorderRadius: 16,
                 sendBoxBackground: 'rgba(255,255,255,0.2)',
                 sendBoxTextColor: '#000',
-                primaryFont: "'Montserrat', sans-serif", // Cambia aquí si deseas otra fuente en los textos del bot
-                accent: '#7786D9' // Cambia color de acento del bot
+                primaryFont: "'Montserrat', sans-serif",
+                accent: '#7786D9'
             };
 
             window.WebChat.renderWebChat({
