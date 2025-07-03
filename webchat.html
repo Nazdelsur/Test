@@ -346,17 +346,28 @@
 
 
         const styleOptions = {
-            botAvatarImage: 'Hiberionlogo.png',
-                botAvatarBackgroundColor: 'transparent',
-                userAvatarBackgroundColor: 'transparent',
-                bubbleBackground: 'rgba(255,255,255,0.2)',
-                bubbleBorderRadius: 16,
-                bubbleFromUserBackground: 'rgba(102,102,102,0.2)',
-                bubbleFromUserBorderRadius: 16,
-                sendBoxBackground: 'rgba(255,255,255,0.2)',
-                sendBoxTextColor: 'AAAAAA',
-                primaryFont: "'Montserrat', sans-serif",
-                accent: '#7786D9'
+            botAvatarImage: 'https://jhgiraldo.github.io/havas-copilot-sso/hubot-svgrepo-com.svg', // Bot's avatar image inside the chatbot
+            botAvatarInitials: '', // Initials shown if image fails or is missing
+            botAvatarBackgroundColor: 'transparent', // Background color for the bot's avatar
+
+            userAvatarImage: 'https://jhgiraldo.github.io/havas-copilot-sso/user-svgrepo-com.svg', // User's avatar image inside the chatbot
+            userAvatarInitials: '', // Initials shown if image fails or is missing
+            userAvatarBackgroundColor: 'rgba(255,255,255,0.2)', // Background color for the user's avatar
+
+            avatarSize: 26, // Size (in px) of both bot and user avatars
+            bubbleBackground: 'rgba(102,102,102,0.2)', // Background color of the bot's chat bubbles
+            bubbleBorderRadius: 16, // Border radius of the bot's chat bubbles
+            bubbleFromUserBackground: 'transparent', // Background color of the user's chat bubbles
+            bubbleFromUserBorderRadius: 16, // Border radius of the user's chat bubbles
+
+            hideUploadButton: false, // Whether to hide the file upload button in the chat input
+
+            sendBoxBackground: 'rgba(255,255,255,0.2)', // Background color of the input box
+            sendBoxBorderTop: 'solid 2px #ccc', // Top border style of the input box
+            sendBoxTextColor: '#000', // Text color in the input box
+
+            primaryFont: "'Montserrat', sans-serif", // Primary font for all chat content
+            accent: '#7786D9'      // Accent color (used for buttons, active states, etc.)  
         };
         // Create a styleSet with custom background for the entire chat
             const styleSet = window.WebChat.createStyleSet({
