@@ -92,15 +92,19 @@
         }
 
         #login, #logout {
-            background: rgba(119, 134, 217, 0.6);
-            color: white;
-            font-weight: 500;
-            border: none;
-            border-radius: 10px;
-            padding: 8px 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
+    background: rgba(119, 134, 217, 0.6);
+    color: white;
+    font-weight: 500;          /* grosor de la fuente */
+    font-size: 14px;           /* tamaño de fuente ajustable */
+    border: none;
+    border-radius: 10px;
+    padding: 8px 16px;         /* tamaño del botón */
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;       /* evita salto de línea */
+    min-width: 70px;           /* ancho mínimo opcional */
+}
+
 
         #login:hover, #logout:hover {
             background: rgba(119, 134, 217, 0.9);
