@@ -2,24 +2,20 @@
 <html lang="en">
 
 <head>
-    <title>HIBERION Web Chat</title>
+    <title>HIBERUS Web Chat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-
-    <!-- Scripts -->
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
-    <script src="https://alcdn.msauth.net/browser/2.32.0/js/msal-browser.min.js"></script>
+    <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.32.0/js/msal-browser.min.js"></script>
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    <!-- Styles embebidos con glassmorfismo -->
     <style>
         body, html {
             height: 100%;
             margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(180deg, rgba(179, 179, 179, 0.62), rgba(111, 109, 109, 0.2)),
-                        url('./img/MS-YP-wallpaper-desktop-1.png') no-repeat center center / cover;
+            font-family: 'Universo', sans-serif;
+            background: linear-gradient(180deg, rgba(179, 179, 179, 0.62), rgba(111, 109, 109, 0.2)), url('./img/MS-YP-wallpaper-desktop-1.png') no-repeat center center / cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,12 +25,11 @@
             width: 90%;
             max-width: 900px;
             height: 90vh;
-            backdrop-filter: blur(12px) brightness(100%);
+            backdrop-filter: blur(20px) brightness(20%);
+            -webkit-backdrop-filter: blur(12px) brightness(50%);
             background: rgba(255, 255, 255, 0.1);
             border-radius: 30px;
-            box-shadow: inset 0 0 22px rgba(242, 242, 242, 0.5),
-                        inset 2px 2px 1px -2px rgba(179, 179, 179, 1),
-                        inset -5px -12px 6px -14px rgba(179, 179, 179, 1);
+            box-shadow: inset 0 0 22px rgba(242, 242, 242, 0.5), inset 2px 2px 1px -2px rgba(179, 179, 179, 1), inset -5px -12px 6px -14px rgba(179, 179, 179, 1);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -44,7 +39,7 @@
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
             font-weight: 700;
-            font-size: 22px;
+            font-size: 20px;
             padding: 15px 20px;
             display: flex;
             align-items: center;
@@ -55,7 +50,7 @@
             background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
             padding: 10px 20px;
-            font-size: 14px;
+            font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -85,7 +80,7 @@
 <body>
     <div id="chatwindow">
         <div id="header">
-            <img src="igris_bot_icon_128x128.png" alt="HIBERION LOGO" style="height: 40px; margin-right: 10px;">
+            <img src="ChatGPT Image 10 jun 2025, 15_16_46.png" alt="HIBERUS LOGO" style="height: 45px; margin-right: 10px;">
             HIBERION Chat Web
         </div>
         <div id="subheader">
@@ -127,7 +122,6 @@
                 console.error(err);
             }
             handleUserState();
-            await renderChatWidget();
         }
 
         async function onSignOutClick() {
@@ -167,22 +161,6 @@
             const { token } = await fetchJSON(tokenEndpoint);
             const directLine = window.WebChat.createDirectLine({ token });
 
-            const store = WebChat.createStore({}, ({ dispatch }) => next => action => {
-                if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
-                    dispatch({
-                        type: "DIRECT_LINE/POST_ACTIVITY",
-                        payload: {
-                            activity: {
-                                type: "event",
-                                name: "startConversation",
-                                channelData: { postBack: true }
-                            }
-                        }
-                    });
-                }
-                return next(action);
-            });
-
             const styleOptions = {
                 botAvatarImage: 'igris_bot_icon_128x128.png',
                 botAvatarBackgroundColor: 'transparent',
@@ -199,7 +177,6 @@
 
             window.WebChat.renderWebChat({
                 directLine,
-                store,
                 userID,
                 styleOptions
             }, document.getElementById('webchat'));
@@ -210,4 +187,5 @@
         })();
     </script>
 </body>
+
 </html>
