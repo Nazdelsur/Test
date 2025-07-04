@@ -60,6 +60,8 @@
             padding: 12px 20px;
             display: flex;
             align-items: center; /* alineación base tipográfica */
+            justify-content: space-between; /* mantiene logo a la derecha */
+            
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
@@ -108,12 +110,12 @@
 <body>
     <div id="chatwindow">
         <div id="header">
-            <img src="Hiberionlogo.png" alt="HiberionLogo"
-                style="height: 80px; margin-right: 18px;" />
-           <div style="display: flex; flex-direction: column; justify-content: center; font-family: 'Universo-2', sans-serif; color: #E9E9E9;">
-        <span style="font-size: 32px; font-weight: 300; line-height: 1;">Hiberion</span>
-        <span style="font-size: 18px; font-weight: 200; color: #d0d0d0; line-height: 1;">Chat web</span>
+        <div style="display: flex; flex-direction: column; justify-content: center; font-family: 'Universo-2', sans-serif; color: #E9E9E9;">
+        <span style="font-size: 40px; font-weight: 300; line-height: 1;">Hiberion</span>
+        <span style="font-size: 24px; font-weight: 200; color: #d0d0d0; line-height: 1;">Chat web</span>
     </div>
+            <img src="Hiberionlogo.png" alt="HiberionLogo"
+                style="height: 80px; margin-left: 18px;" />
         </div>
 
         <div id="subheader">
