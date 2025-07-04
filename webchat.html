@@ -359,11 +359,11 @@
             userAvatarInitials: '', // Initials shown if image fails or is missing
             userAvatarBackgroundColor: 'rgba(255,255,255,0.2)', // Background color for the user's avatar
 
-            avatarSize: 26, // Size (in px) of both bot and user avatars
+            avatarSize: 30, // Size (in px) of both bot and user avatars
             bubbleBackground: 'rgba(102,102,102,0.2)', // Background color of the bot's chat bubbles
-            bubbleBorderRadius: 16, // Border radius of the bot's chat bubbles
+            bubbleBorderRadius: 15, // Border radius of the bot's chat bubbles
             bubbleFromUserBackground: 'transparent', // Background color of the user's chat bubbles
-            bubbleFromUserBorderRadius: 16, // Border radius of the user's chat bubbles
+            bubbleFromUserBorderRadius: 15, // Border radius of the user's chat bubbles
 
             hideUploadButton: false, // Whether to hide the file upload button in the chat input
 
@@ -385,6 +385,19 @@
                 ...styleSet.root,
                 backgroundColor: 'rgba(255, 255, 255, 0.05)'
             };
+
+        // Texto del BOT en regular
+        styleSet.botBubbleText = {
+    ...styleSet.botBubbleText,
+    fontWeight: 400 // Regular
+
+
+        // Texto del USUARIO en bold
+styleSet.userBubbleText = {
+    ...styleSet.userBubbleText,
+    fontWeight: 700 // Bold
+};
+        
 
         const activityMiddleware = () => next => card => {
             if (card.activity.from.role === 'user') {
