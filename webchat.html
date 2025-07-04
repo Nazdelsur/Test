@@ -386,18 +386,18 @@
                 backgroundColor: 'rgba(255, 255, 255, 0.05)'
             };
         
-      // Fuente y estilo del BOT en regular, Montserrat
+ // BOT en Montserrat Light
 styleSet.botBubbleText = {
     ...styleSet.botBubbleText,
-    fontWeight: 400,
+    fontWeight: 300, // light
     fontFamily: "'Montserrat', sans-serif"
 };
-        
- // Fuente y estilo del USUARIO en bold, Universo-2
+
+// USUARIO en Montserrat Bold
 styleSet.userBubbleText = {
     ...styleSet.userBubbleText,
-    fontWeight: 700,
-    fontFamily: "'Courier New, monospace"
+    fontWeight: 700, // bold
+    fontFamily: "'Montserrat', sans-serif"
 };
 
         const activityMiddleware = () => next => card => {
