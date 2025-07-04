@@ -19,7 +19,7 @@
     <style>
         @font-face {
             font-family: 'Universo-2';
-            src: url('./fonts/universo-2.ttf') format('truetype');
+            src: url('https://raw.githubusercontent.com/Nazdelsur/Test/main/universo-2.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
@@ -386,13 +386,18 @@
                 backgroundColor: 'rgba(255, 255, 255, 0.05)'
             };
         
-        styleSet.botBubbleText = {
+      // Fuente y estilo del BOT en regular, Montserrat
+styleSet.botBubbleText = {
     ...styleSet.botBubbleText,
-    fontWeight: 400 // Regular
+    fontWeight: 400,
+    fontFamily: "'Montserrat', sans-serif"
 };
-        styleSet.userBubbleText = {
+        
+ // Fuente y estilo del USUARIO en bold, Universo-2
+styleSet.userBubbleText = {
     ...styleSet.userBubbleText,
-    fontWeight: 700 // Bold
+    fontWeight: 700,
+    fontFamily: "'Universo-2', sans-serif"
 };
 
         const activityMiddleware = () => next => card => {
