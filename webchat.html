@@ -42,10 +42,10 @@
             height: 90vh;
             backdrop-filter: blur(20px) brightness(100%);
             -webkit-backdrop-filter: blur(12px) brightness(50%);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 30px;
                         box-shadow: inset 0 0 px rgba(1, 3, 12, 0.5),
-                        inset 2px 2px 1px -2px rgba(179, 179, 179, 1),
+                        inset 2px 2px 1px -2px rgba(179, 179, 179, 0.1),
                         inset -5px -12px 6px -14px rgba(179, 179, 179, 1);
             overflow: hidden;
             display: flex;
@@ -360,16 +360,16 @@
             userAvatarBackgroundColor: 'rgba(255,255,255,0.2)', // Background color for the user's avatar
 
             avatarSize: 32, // Size (in px) of both bot and user avatars
-            bubbleBackground: 'rgba(102,102,102,0.1)', // Background color of the bot's chat bubbles
+            bubbleBackground: 'rgba(102,102,102,0.08)', // Background color of the bot's chat bubbles
             bubbleBorderRadius: 15, // Border radius of the bot's chat bubbles
-            bubbleFromUserBackground: 'transparent', // Background color of the user's chat bubbles
+            bubbleFromUserBackground: 'rgba(255, 255, 255, 0.08)', // Background color of the user's chat bubbles
             bubbleFromUserBorderRadius: 15, // Border radius of the user's chat bubbles
 
             hideUploadButton: false, // Whether to hide the file upload button in the chat input
 
-            sendBoxBackground: 'rgba(255,255,255,0.2)', // Background color of the input box
-            sendBoxBorderTop: 'solid 2px #ccc', // Top border style of the input box
-            sendBoxTextColor: '#000', // Text color in the input box
+            sendBoxBackground: 'rgba(255,255,255,0.08)', // Background color of the input box
+            sendBoxBorderTop: 'solid 1px rgba(255, 255, 255, 0.2)', // Top border style of the input box
+            sendBoxTextColor: '#FFFFFF', // Text color in the input box
 
             primaryFont: "'Lato', sans-serif", // Primary font for all chat content
             fontSize: '14px', // Tamaño refinado del texto en el chat
