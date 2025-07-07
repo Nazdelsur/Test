@@ -371,9 +371,6 @@
             sendBoxBorderTop: 'solid 1px rgba(255, 255, 255, 0.2)', // Top border style of the input box
             sendBoxTextColor: '#000000', // Text color in the input box
 
-            typingIndicatorForegroundColor: '#7786D9', // ✅ NUEVO
-            typingIndicatorBackgroundColor: 'transparent', // ✅ NUEVO
-
             primaryFont: "'Lato', sans-serif", // Primary font for all chat content
             fontSize: '14px', // Tamaño refinado del texto en el chat
             accent: '#7786D9'      // Accent color (used for buttons, active states, etc.)  
@@ -384,6 +381,16 @@
                 backgroundColor: 'rgba(255, 255, 255, 0.05)' // Red translucent background for the chat area
             });
 
+styleSet.typingIndicator = {
+    ...styleSet.typingIndicator,
+    backgroundColor: 'transparent'
+};
+
+styleSet.typingIndicatorDot = {
+    ...styleSet.typingIndicatorDot,
+    backgroundColor: '#7786D9'
+};
+        
             // Force background color on root to ensure application
             styleSet.root = {
                 ...styleSet.root,
